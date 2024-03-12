@@ -4,12 +4,12 @@
 #include <cstdio>
 #include <memory>
 
-std::unique_ptr<ExprAST> logError(const char *str) {
+auto LogError(const char *str) -> std::unique_ptr<ExprAST> {
   fprintf(stderr, "LogError: %s\n", str);
   return nullptr;
 }
 
-std::unique_ptr<PrototypeAST> logErrorP(const char *str) {
-  logError(str);
+auto LogErrorP(const char *str) -> std::unique_ptr<PrototypeAST> {
+  LogError(str);
   return nullptr;
 }
