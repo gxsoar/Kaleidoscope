@@ -67,7 +67,7 @@ public:
     return cur_tok = Lexer::GetTok();
   }
 
-private:
+public:
   static std::string identifier_str;   // Filled in if tok_identifier
   static double num_val; // Filled in tok_number
   static int cur_tok;
