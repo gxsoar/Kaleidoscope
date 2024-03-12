@@ -7,19 +7,19 @@
 
 class ExprAST {
 public:
-  virtual ~ExprAST() {}
+  virtual ~ExprAST() = default;
 };
 
 class NumberExprAST : public ExprAST {
 public:
-  NumberExprAST(double val) : val_(val) {}
+  explicit NumberExprAST(double val) : val_(val) {}
 private:
   double val_;
 };
 
 class VariableExprAST : public ExprAST {
 public:
-  VariableExprAST(const std::string &name) : name_(name) {}
+  explicit VariableExprAST(std::string name) : name_(std::move(name)) {}
 private:
   std::string name_;
 };
@@ -36,8 +36,8 @@ private:
 
 class CallExprAST : public ExprAST {
 public:
-  CallExprAST(const std::string &callee, std::vector<std::unique_ptr<ExprAST>> args)
-    : callee_(callee), args_(std::move(args)) {}
+  CallExprAST(std::string callee, std::vector<std::unique_ptr<ExprAST>> args)
+    : callee_(std::move(callee)), args_(std::move(args)) {}
 private:
   std::string callee_;
   // function args
@@ -46,8 +46,8 @@ private:
 
 class PrototypeAST {
 public:
-  PrototypeAST(const std::string &name, std::vector<std::string> args) : name_(name), args_(args) {}
-  const std::string &getName() const { return name_; }
+  PrototypeAST(std::string name, std::vector<std::string> args) : name_(std::move(name)), args_(std::move(args)) {}
+  auto GetName() const -> const std::string & { return name_; }
 private:
   std::string name_;
   std::vector<std::string> args_;
